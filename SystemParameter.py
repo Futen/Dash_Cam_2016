@@ -15,8 +15,17 @@ PANO_CUT_PATH = '%s/cut' %PANO_PATH # Video/'vname'/pano/cut
 
 # Do not change the following code 
 # The function is to get the related folder of video
-def GetPath(video_name): #GetPath('ZCTXXXX')
-    video_path = VIDEO_PATH + '/' + video_name
+def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
+    sub_dir = ''
+    if TYPE != 'pos' and TYPE != 'neg':
+        print 'pos or neg???'
+        exit()
+    elif TYPE == 'pos':
+        sub_dir = 'positive'
+    elif TYPE == 'neg':
+        sub_dir = 'negative'
+    video_path = VIDEO_PATH + '/' + sub_dir  + '/' + video_name
+
     if not(os.path.isdir(video_path)) or '\n' in video_name:
         print 'error video dir or /n in name'
         exit()
@@ -42,9 +51,10 @@ def GetPath(video_name): #GetPath('ZCTXXXX')
                    'pano_cut_path':pano_cut_path,
                    'state':state
                    })
+    '''
     for index, key in enumerate(output):
         if key != 'state':
             if not(os.path.isdir(output[key])):
                 subprocess.call('mkdir -p %s'%output[key], shell=True)
-
+    '''
     return output
