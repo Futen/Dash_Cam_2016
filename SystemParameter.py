@@ -31,6 +31,7 @@ def GetPath(video_name): #GetPath('ZCTXXXX')
     if os.path.isfile(video_path + '/reconstruction.json'):
         reconstruction = 'done'
     if os.path.isfile(pano_path + '/pano_lst.txt'):
+        
         panolist = 'yes'
         #panolist = 'no'
     state = dict({'reconstruction':reconstruction, 'panolist':panolist, 'panodownload':panodownload})
