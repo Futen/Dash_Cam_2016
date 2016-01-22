@@ -13,6 +13,7 @@ PANO_UNCUT_PATH = '%s/download'%PANO_PATH # Video/'vname'/pano/download
 PANO_CUT_PATH = '%s/cut' %PANO_PATH # Video/'vname'/pano/cut
 
 
+
 # Do not change the following code 
 # The function is to get the related folder of video
 def GetPath(video_name): #GetPath('ZCTXXXX')
