@@ -6,8 +6,8 @@ import subprocess
 sys.path.append('/home/Futen/Dash_Cam_2016/')
 import SystemParameter as SP
 
-TYPE = 'pos' # I should choose neg or pos
-
+TYPE = 'neg' # I should choose neg or pos
+# average 0.61 minute for one video
 video_lst = SP.GetVideoList(TYPE) # get video list
 video_lst.sort()
 #print video_lst
