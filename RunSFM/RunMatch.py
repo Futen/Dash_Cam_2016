@@ -9,6 +9,7 @@ import SystemParameter as SP
 TYPE = 'pos' # I should choose neg or pos
 
 video_lst = SP.GetVideoList(TYPE) # get video list
+video_lst.sort()
 #print video_lst
 for video in video_lst:
     info =  SP.GetPath(video, TYPE)
@@ -17,4 +18,4 @@ for video in video_lst:
     #print command
     subprocess.call(command, shell=True)
     command = '%s/run_match %s'%(SP.OPENSFM_PATH, info['video_path'])
-    sunprocess.call(command, shell=True)
+    subprocess.call(command, shell=True)
