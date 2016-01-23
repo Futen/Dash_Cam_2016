@@ -7,7 +7,7 @@ sys.path.append('/home/Futen/Dash_Cam_2016/')
 import SystemParameter as SP
 from multiprocessing import Pool
 
-TYPE = 'neg' # I should choose neg or pos
+TYPE = 'pos' # I should choose neg or pos
 
 file_name = ''
 source_folder = ''
@@ -33,6 +33,8 @@ def Extract(v_name):
     #print source_video
     command = 'ffmpeg -i %s -r 10 -qscale:v 1 %s/'%(source_video, info['frame_path']) + 'image-%5d.jpg'
     subprocess.call(command, shell=True)
+    if len(os.listdir(info['frame_path'])) == 0 or not(os.path.isdir(info['frame_path'])):
+        print info[frame_path]
     #print command
 
 if __name__ == '__main__':
