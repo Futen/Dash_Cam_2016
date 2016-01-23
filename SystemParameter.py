@@ -4,7 +4,7 @@ import subprocess
 ROOT_PATH = '/home/Futen/Dash_Cam_2016' # root directory
 VIDEO_PATH = '/home/Futen/Dash_Cam_2016/Videos' # Location of video
 VIDEO_INFO_PATH = '/home/Futen/Dash_Cam_2016/video_info'
-
+OPENSFM_PATH = '/home/Futen/OpenSfM/bin'
 # parameter for pano
 RADIUS = 1 # download pano with RADIUS km in circle
 FRAME_PATH = 'images' # Videos/vname/images
@@ -15,6 +15,23 @@ PANO_CUT_PATH = '%s/cut' %PANO_PATH # Video/'vname'/pano/cut
 
 # Do not change the following code 
 # The function is to get the related folder of video
+def GetVideoList(TYPE):
+    file_name = ''
+    lst = []
+    if TYPE == 'pos':
+        file_name = '/home/Futen/Dash_Cam_2016/DataList/positive_check.txt'
+    elif TYPE == 'neg':
+        file_name = '/home/Futen/Dash_Cam_2016/DataList/negative_check.txt'
+    else:
+        print 'Type error in GetVideoList'
+        exit()
+    f = open(file_name, 'r')
+    for line in f:
+        line = line[0:-1].split('\t')
+        name = line[0].split('.')[0]
+        lst.append(name)
+    f.close()
+    return lst
 def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
     sub_dir = ''
     if TYPE != 'pos' and TYPE != 'neg':
