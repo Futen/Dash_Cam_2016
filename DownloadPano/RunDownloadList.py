@@ -11,7 +11,7 @@ import numpy as np
 import time
 
 TYPE = 'pos'
-def DownloadList(center):
+def DownloadList(center):   # average 1.5 minute for one video
     pano_lst = []
     err_lst = []
     bound = GetCircleBound.GetCircleBound(center)
