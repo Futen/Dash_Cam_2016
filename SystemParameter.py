@@ -14,7 +14,7 @@ PANO_CUT_PATH = '%s/cut' %PANO_PATH # Video/'vname'/pano/cut
 
 
 # Do not change the following code 
-# The function is to get the related folder of video
+# The function is to get all video name
 def GetVideoList(TYPE):
     file_name = ''
     lst = []
@@ -32,6 +32,26 @@ def GetVideoList(TYPE):
         lst.append(name)
     f.close()
     return lst
+# The function is to get lat lon of all video
+def GetVideoLatLon(TYPE):
+    file_name = ''
+    lst = []
+    if TYPE == 'pos':
+        file_name = '/home/Futen/Dash_Cam_2016/DataList/positive_check.txt'
+    elif TYPE == 'neg':
+        file_name = '/home/Futen/Dash_Cam_2016/DataList/negative_check.txt'
+    else:
+        print 'Type error in GetVideoList'
+        exit()
+    f = open(file_name, 'r')
+    for line in f:
+        line = line[0:-1].split('\t')
+        name = line[0].split('.')[0]
+        info = (name, float(line[2]), float(line[3]))
+        lst.append(info)
+    f.close()
+    return lst
+# The function is to get the related folder of video
 def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
     sub_dir = ''
     if TYPE != 'pos' and TYPE != 'neg':
@@ -56,7 +76,7 @@ def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
     panodownload = 'no'
     if os.path.isfile(video_path + '/reconstruction.json'):
         reconstruction = 'done'
-    if os.path.isfile(pano_path + '/pano_lst.txt'):    
+    if os.path.isfile(pano_path + '/pano_lst_finish.txt'):    
         panolist = 'yes'
         #panolist = 'no'
     state = dict({'reconstruction':reconstruction, 'panolist':panolist, 'panodownload':panodownload})
