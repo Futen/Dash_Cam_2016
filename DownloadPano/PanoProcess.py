@@ -3,7 +3,7 @@
 import os
 import subprocess
 import sys
-sys.path.append('/home/Futen/Dash_Cam/Google_Library')
+sys.path.append('/home/Futen/Dash_Cam_2016/Google_Library')
 import GoogleSV
 import GetCutout
 import math

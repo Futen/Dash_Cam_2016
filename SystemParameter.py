@@ -6,7 +6,7 @@ VIDEO_PATH = '/home/Futen/Dash_Cam_2016/Videos' # Location of video
 VIDEO_INFO_PATH = '/home/Futen/Dash_Cam_2016/video_info'
 OPENSFM_PATH = '/home/Futen/OpenSfM/bin'
 # parameter for pano
-RADIUS = 1 # download pano with RADIUS km in circle
+RADIUS = 0.3 # download pano with RADIUS km in circle
 FRAME_PATH = 'images' # Videos/vname/images
 PANO_PATH = 'pano' # Videos/'vname'/pano ------> VIDEO_PATH + vname + PANO_PATH
 PANO_UNCUT_PATH = '%s/download'%PANO_PATH # Video/'vname'/pano/download

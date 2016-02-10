@@ -11,7 +11,7 @@ import numpy as np
 import time
 
 TYPE = 'pos'
-def DownloadList(center):   # average 1.5 minute for one video
+def DownloadList(center):   # average 42 second for one video
     pano_lst = []
     err_lst = []
     bound = GetCircleBound.GetCircleBound(center)
@@ -53,8 +53,9 @@ def Download(video_info): # (vname, lat, lon))
         subprocess.call(command, shell=True)
 
 if __name__ == '__main__':
-    pool = Pool(processes = 8)
+    pool = Pool(processes = 12)
     lst = SP.GetVideoLatLon(TYPE)
+    #Download(lst[-1])
     pool.map(Download, lst)
 
 

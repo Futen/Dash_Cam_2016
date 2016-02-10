@@ -1,14 +1,14 @@
 #! /usr/bin/env python
 
 import sys
-sys.path.append('/home/Futen/Dash_Cam')
+sys.path.append('/home/Futen/Dash_Cam_2016')
 from geopy.distance import VincentyDistance
 import numpy as np
 import PanoProcess
 import SystemParameter
 
 step_latlon = 0.0009
-step_ten_meter = step_latlon # step_latlon/10-->every ten meter
+step_ten_meter = step_latlon/2 # step_latlon/10-->every ten meter
 RADIUS = SystemParameter.RADIUS #km
 
 def GetCircleBound(center): # lat, lon
