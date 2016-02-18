@@ -4,3 +4,4 @@ config.yaml
 DataList/
 Videos_Source_File/
 Videos/
+DownloadPano/*/
