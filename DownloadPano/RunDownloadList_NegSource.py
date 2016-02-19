@@ -62,7 +62,7 @@ def Download(video_info): # (vname, lat, lon))
         print '%s finish'%vname
     
 if __name__ == '__main__':
-    pool = Pool(processes = 12)
+    pool = Pool(processes = 1)
     lst = SP.GetNegSourceList(LATLON = True)
     #Download(lst[-1])
     pool.map(Download, lst)

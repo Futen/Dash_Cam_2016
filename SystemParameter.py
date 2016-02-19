@@ -142,6 +142,8 @@ def GetNegSourcePath(video_name):
     if os.path.isfile(pano_path + '/pano_lst_finish.txt'):    
         panolist = 'yes'
         #panolist = 'no'
+    if os.path.isfile(pano_path + '/pano_lst_precise.txt'):
+        panodownload = 'yes'
     state = dict({'reconstruction':reconstruction, 'panolist':panolist, 'panodownload':panodownload})
     output = dict({'pano_path':pano_path,
                    'pano_uncut_path':pano_uncut_path,
