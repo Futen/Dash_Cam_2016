@@ -95,3 +95,47 @@ def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
                 subprocess.call('mkdir -p %s'%output[key], shell=True)
     '''
     return output
+def GetNegSourceList(LATLON = False, SUB_VIDEO = False):
+    v_lst = []
+    f = open('/home/Futen/Dash_Cam_2016/DataList/negative_arrange.txt','r')
+    if LATLON == False and SUB_VIDEO == False:
+        for line in f:
+            line = line[0:-1].split('\t')
+            v_lst.append(line[0])
+    elif LATLON == True and SUB_VIDEO == False:
+        for line in f:
+            line = line[0:-1].split('\t')
+            tmp = []
+            tmp.append(line[0])
+            tmp.append(line[1])
+            tmp.append(line[2])
+            v_lst.append(tmp)
+    elif LATLON == False and SUB_VIDEO == True:
+        for line in f:
+            line = line[0:-1].split('\t')
+            tmp = []
+            tmp.append(line[0])
+            for index in range(3, len(line)):
+                tmp.append(line[index])
+            v_lst.append(tmp)
+    else:
+        for line in f:
+            line = line[0:-1].split('\t')
+            tmp = []
+            for index in range(0,len(line)):
+                tmp.append(line[index])
+            v_lst.append(tmp)
+    f.close()
+    return v_lst
+def GetNegSourcePath(video_name):
+    video_path = VIDEO_PATH + '/NegSource/' + video_name
+    pano_uncut_path = video_path + '/download'
+    pano_cut_path = video_path + '/cut'
+    output = dict({'video_path':video_path,
+                   'pano_uncut_path':pano_uncut_path,
+                   'pano_cut_path':pano_cut_path
+                   })
+    for index,key in enumerate(output):
+        if not(os.path.isdir(output[key])):
+            subprocess.call('mkdir -p %s'%output[key], shell=True)
+    return output

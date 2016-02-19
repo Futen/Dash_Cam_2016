@@ -10,7 +10,10 @@ from multiprocessing import Pool
 import numpy as np
 import time
 
-TYPE = 'pos'
+number_to_do = 247
+number = 0
+TYPE = 'neg'
+
 def DownloadList(center):   # average 42 second for one video
     pano_lst = []
     err_lst = []
@@ -26,7 +29,10 @@ def DownloadList(center):   # average 42 second for one video
             pano_lst.append((pano_name, latlon[0], latlon[1]))
     return (pano_lst, err_lst)
 def Download(video_info): # (vname, lat, lon))
-    print video_info
+    global number
+    if number >= number_to_do:
+        return
+    print '# %d'%number,video_info
     vname = video_info[0]
     latlon = (float(video_info[1]), float(video_info[2]))
     path =  SP.GetPath(vname, TYPE)# get all path
@@ -51,6 +57,9 @@ def Download(video_info): # (vname, lat, lon))
         f.close()
         command = 'mv %s/pano_lst.txt %s/pano_lst_finish.txt'%(path['pano_path'], path['pano_path'])
         subprocess.call(command, shell=True)
+        number += 1
+    else:
+        print '%s finish'%vname
 
 if __name__ == '__main__':
     pool = Pool(processes = 12)
