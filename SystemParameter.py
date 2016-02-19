@@ -79,6 +79,8 @@ def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
     if os.path.isfile(pano_path + '/pano_lst_finish.txt'):    
         panolist = 'yes'
         #panolist = 'no'
+    if os.path.isfile(pano_path + '/pano_lst_precise.txt'):
+        panodownload = 'yes'
     state = dict({'reconstruction':reconstruction, 'panolist':panolist, 'panodownload':panodownload})
     
     output = dict({'video_path':video_path,
@@ -128,14 +130,29 @@ def GetNegSourceList(LATLON = False, SUB_VIDEO = False):
     f.close()
     return v_lst
 def GetNegSourcePath(video_name):
-    video_path = VIDEO_PATH + '/NegSource/' + video_name
-    pano_uncut_path = video_path + '/download'
-    pano_cut_path = video_path + '/cut'
-    output = dict({'video_path':video_path,
+    pano_path = VIDEO_PATH + '/NegSource/' + video_name
+    pano_uncut_path = pano_path + '/download'
+    pano_cut_path = pano_path + '/cut'
+    # check process state
+    reconstruction = 'no'
+    panolist = 'no'
+    panodownload = 'no'
+    if os.path.isfile(pano_path + '/reconstruction.json'):
+        reconstruction = 'done'
+    if os.path.isfile(pano_path + '/pano_lst_finish.txt'):    
+        panolist = 'yes'
+        #panolist = 'no'
+    state = dict({'reconstruction':reconstruction, 'panolist':panolist, 'panodownload':panodownload})
+    output = dict({'pano_path':pano_path,
                    'pano_uncut_path':pano_uncut_path,
-                   'pano_cut_path':pano_cut_path
+                   'pano_cut_path':pano_cut_path,
+                   'state':state
                    })
+
+    '''
     for index,key in enumerate(output):
-        if not(os.path.isdir(output[key])):
-            subprocess.call('mkdir -p %s'%output[key], shell=True)
+        if key != 'state':
+            if not(os.path.isdir(output[key])):
+                subprocess.call('mkdir -p %s'%output[key], shell=True)
+    '''
     return output
