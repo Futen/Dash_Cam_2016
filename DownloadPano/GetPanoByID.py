@@ -85,4 +85,3 @@ def GetPanoByID(ID, DIR):
         subprocess.call('rm -r buffer_%s/'%ID, shell=True)
         return False
     
-print GetPanoByID(ID=test_id, DIR='/home/Futen/Public')
