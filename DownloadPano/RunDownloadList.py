@@ -9,6 +9,7 @@ import subprocess
 from multiprocessing import Pool
 import numpy as np
 import time
+import GetPanoByID
 
 number_to_do = 247
 number = 0

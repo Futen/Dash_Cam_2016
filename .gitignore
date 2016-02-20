@@ -1,5 +1,6 @@
 *.txt
 *.pyc
+wget*
 config.yaml
 DataList/
 Videos_Source_File/
