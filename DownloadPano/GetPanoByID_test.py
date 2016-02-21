@@ -97,4 +97,4 @@ def GetPanoByID(ID, DIR):
     except:
         subprocess.call('rm -r buffer_%s/'%ID, shell=True)
         return False
-#GetPanoByID(test_id,'.') 
+GetPanoByID(test_id,'.') 

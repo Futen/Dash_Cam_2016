@@ -14,6 +14,7 @@ import time
 
 
 def Download(v_name):
+    start = time.time()
     info = SP.GetNegSourcePath(v_name)
     if info['state']['panolist'] == 'no':
         return 
@@ -58,6 +59,8 @@ def Download(v_name):
         img = img + '\n'
         pano_cut_lst.write(img)
     pano_cut_lst.close()
+    total_time = time.time() - start
+    print '%s Consume %f minutes'%(v_name, total_time/60)
     return 
 
 if __name__ == '__main__':

@@ -3,18 +3,11 @@ import subprocess
 import cv2
 import os
 import numpy as np
-import urllib2
 
 test_id = 'X8dCxQEPFLJpXnntuKRFLA'
 BaseUri = 'http://maps.google.com/cbk'
 zoom_lv = 4
 ext = '.jpg'
-def GetUrlContent(url):
-    f = urllib2.urlopen(url)
-    data = f.read()
-    f.close()
-    return data
-
 def GetPanoramaTile(panoid, zoom, x, y): 
     url =  '%s?'
     url += 'output=tile'                    # tile output
@@ -28,7 +21,7 @@ def GetPanoramaTile(panoid, zoom, x, y):
     url += '&v=4'                           # version
     url = url % (BaseUri, panoid, zoom, x, y)
     #print url
-    return GetUrlContent(url)
+    return url
 def GetPanoByID(ID, DIR):
     if not os.path.isdir(DIR):
         return False
@@ -43,11 +36,8 @@ def GetPanoByID(ID, DIR):
         index = 0
         for row in row_range:
             for col in col_range:
-                data = GetPanoramaTile(ID, zoom_lv, col, row)
-                #subprocess.call("wget '%s'  -O buffer_%s/tmp/image_%.2d%s"%(url, ID, index, ext), shell=True)
-                f = open('buffer_%s/tmp/image_%.2d%s'%(ID,index,ext), 'wb')
-                f.write(data)
-                f.close()
+                url = GetPanoramaTile(ID, zoom_lv, col, row)
+                subprocess.call("wget '%s'  -O buffer_%s/tmp/image_%.2d%s"%(url, ID, index, ext), shell=True)
                 index += 1
         lst = os.listdir('buffer_%s/tmp/'%ID)
         lst.sort()
@@ -70,11 +60,8 @@ def GetPanoByID(ID, DIR):
         index = 0
         for row in row_range:
             for col in col_range:
-                data = GetPanoramaTile(ID, zoom_lv, col, row)
-                #subprocess.call("wget '%s'  -O buffer_%s/tmp/image_%.2d%s"%(url, ID, index, ext), shell=True)
-                f = open('buffer_%s/tmp/image_%.2d%s'%(ID,index,ext), 'wb')
-                f.write(data)
-                f.close()
+                url = GetPanoramaTile(ID, zoom_lv, col, row)
+                subprocess.call("wget '%s'  -O buffer_%s/tmp/image_%.2d%s"%(url, ID, index, ext), shell=True)
                 index += 1
         lst = os.listdir('buffer_%s/tmp/'%ID)
         lst.sort()
@@ -97,4 +84,4 @@ def GetPanoByID(ID, DIR):
     except:
         subprocess.call('rm -r buffer_%s/'%ID, shell=True)
         return False
-#GetPanoByID(test_id,'.') 
+    
