@@ -3,19 +3,22 @@
 import sys
 sys.path.append('/home/Futen/Dash_Cam_2016')
 import SystemParameter as SP
-import GetCircleBound
 import PanoProcess
 import subprocess
-import numpy as np
 import os
-from multiprocessing import Pool
 import GetPanoByID
 import time
 
-
-def Download(v_name):
-    start = time.time()
-    info = SP.GetNegSourcePath(v_name)
+def ArgumentComprass(v_lst, seg_type):
+    out = []
+    for one in v_lst:
+        tmp = (one, seg_type)
+        out.append(tmp)
+    return out
+def Download(v_name_comprass):
+    v_name = v_name_comprass[0]
+    seg_type = v_name_comprass[1]
+    info = SP.GetPath(v_name, seg_type)
     if info['state']['panolist'] == 'no':
         return 
     print info
@@ -46,7 +49,7 @@ def Download(v_name):
                 error_file.write('%s\t%s\t%s\n'%(ID,location[0], location[1]))
             error_file.close()
             continue
-        time.sleep(1)
+        #time.sleep(1)
         
     pano_file.close()
     pano_out_file.close()
@@ -59,17 +62,4 @@ def Download(v_name):
         img = img + '\n'
         pano_cut_lst.write(img)
     pano_cut_lst.close()
-    total_time = time.time() - start
-    print '%s Consume %f minutes'%(v_name, total_time/60)
     return 
-
-if __name__ == '__main__':
-    pool = Pool(processes = 1)
-    lst = SP.GetNegSourceList()
-    do_lst = []
-    for one in lst:
-        info = SP.GetNegSourcePath(one)
-        if info['state']['panodownload'] == 'no':
-            do_lst.append(one)
-    #Download(lst[-1])
-    pool.map(Download, do_lst)

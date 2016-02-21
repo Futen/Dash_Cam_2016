@@ -54,13 +54,15 @@ def GetVideoLatLon(TYPE):
 # The function is to get the related folder of video
 def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
     sub_dir = ''
-    if TYPE != 'pos' and TYPE != 'neg':
+    if TYPE != 'pos' and TYPE != 'neg' and TYPE != 'NegSource':
         print 'pos or neg???'
         exit()
     elif TYPE == 'pos':
         sub_dir = 'positive'
     elif TYPE == 'neg':
         sub_dir = 'negative'
+    elif TYPE == 'NegSource':
+        return GetNegSourcePath(video_name)
     video_path = VIDEO_PATH + '/' + sub_dir  + '/' + video_name
 
     if not(os.path.isdir(video_path)) or '\n' in video_name:
