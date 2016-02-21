@@ -22,6 +22,8 @@ def GetVideoList(TYPE):
         file_name = '/home/Futen/Dash_Cam_2016/DataList/positive_check.txt'
     elif TYPE == 'neg':
         file_name = '/home/Futen/Dash_Cam_2016/DataList/negative_check.txt'
+    elif TYPE == 'NegSource':
+        return GetNegSourceList()
     else:
         print 'Type error in GetVideoList'
         exit()

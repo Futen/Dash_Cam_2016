@@ -21,6 +21,7 @@ def GetSiftList(DIR, OUTPUT_NAME): #output_name is output_dir + name
         f.write(one + '\n')
     f.close()
 def ExtractSift(v_name):
+    info = SP.GetPath(v_name, TYPE)
     if TYPE == 'pos':
     elif TYPE == 'neg':
     elif TYPE == 'NegSource':
