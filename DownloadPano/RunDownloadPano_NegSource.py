@@ -9,6 +9,8 @@ import subprocess
 import numpy as np
 import os
 from multiprocessing import Pool
+import GetPanoByID
+import time
 
 
 def Download(v_name):
@@ -22,24 +24,20 @@ def Download(v_name):
     #subprocess.call('rm %s/*'%info['pano_cut_path'],shell=True)
     pano_file = open(info['pano_path']+'/pano_lst_finish.txt','r')
     pano_out_file = open(info['pano_path']+'/pano_lst_tmp.txt','w')
+    finish_lst = []
     for line in pano_file:
         line = line.split('\t')
         ID = line[0]
         location = PanoProcess.GoogleSV.getLocationbyID(ID)
         #print location
-        try:
-            PanoProcess.GetPanoByID(ID, 'tmp_%s/'%ID)
-            name = 'tmp_%s/pano_'%ID + ID + '.jpg'
-            PanoProcess.CutPano(name, 'tmp_%s/cut/'%ID)
-            command = 'mv %s %s'%(name, info['pano_uncut_path'])
-            subprocess.call(command, shell=True)
-            command = 'mv tmp_%s/cut/*.jpg %s'%(ID,info['pano_cut_path'])
-            subprocess.call(command, shell=True)
-            subprocess.call('rm -r tmp_%s'%ID, shell=True)
-            #print location
+        if ID in finish_lst:
+            continue
+        check = GetPanoByID.GetPanoByID(ID, info['pano_cut_path'])
+        if check == True:
             s = 'pano_' + ID + '.jpg' + '\t' + location[0] + '\t' + location[1] + '\n'
             pano_out_file.write(s)
-        except:
+            finish_lst.append(ID)
+        else:
             print 'error %s'%ID
             error_file = open('%s/download_error_lst.txt'%info['pano_path'],'a')
             #subprocess.call('rm -r */', shell=True)
@@ -47,6 +45,8 @@ def Download(v_name):
                 error_file.write('%s\t%s\t%s\n'%(ID,location[0], location[1]))
             error_file.close()
             continue
+        time.sleep(1)
+        
     pano_file.close()
     pano_out_file.close()
     subprocess.call('mv %s %s'%(info['pano_path']+'/pano_lst_tmp.txt', info['pano_path']+'/pano_lst_precise.txt'),shell=True)
@@ -61,7 +61,7 @@ def Download(v_name):
     return 
 
 if __name__ == '__main__':
-    pool = Pool(processes = 4)
+    pool = Pool(processes = 1)
     lst = SP.GetNegSourceList()
     do_lst = []
     for one in lst:
@@ -70,8 +70,3 @@ if __name__ == '__main__':
             do_lst.append(one)
     #Download(lst[-1])
     pool.map(Download, do_lst)
-    subprocess.call('rm -r */',shell=True)
-
-
-
-

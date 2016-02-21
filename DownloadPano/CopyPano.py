@@ -12,7 +12,8 @@ for line in f:
     v_name = line[4]
     name = line[0].split('.')[0]
     info = SP.GetPath(name,'pos')
-    if v_name in lst and info['state']['panodownload'] == 'yes':
+    info_source = SP.GetNegSourcePath(v_name)
+    if v_name in lst and info['state']['panodownload'] == 'yes' and info_source['state']['panodownload'] == 'no':
         print '%s %s'%(name, v_name)
         source_info = SP.GetNegSourcePath(v_name)
         command = 'cp %s/*.txt %s/'%(info['pano_path'], source_info['pano_path'])
