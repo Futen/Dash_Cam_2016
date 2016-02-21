@@ -15,7 +15,7 @@ def ArgumentComprass(v_lst, seg_type):
         tmp = (one, seg_type)
         out.append(tmp)
     return out
-def Download(v_name_comprass):
+def DownloadPano(v_name_comprass):
     v_name = v_name_comprass[0]
     seg_type = v_name_comprass[1]
     info = SP.GetPath(v_name, seg_type)
