@@ -43,6 +43,7 @@ if __name__ == '__main__':
         exit()
     lst = GetList(argv[1])
     lst = libRundownload.ArgumentComprass(lst, TYPE)
-    tmp = ()
+    test = ('Z5qLtC7sTmU', 'NegSource')
+    Download(test)
     #pool = Pool(processes = 1)
     #pool.map(Download, lst)
