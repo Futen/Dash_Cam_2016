@@ -64,5 +64,5 @@ def DownloadPano(v_name_comprass):
         pano_cut_lst.write(img)
     pano_cut_lst.close()
     total_time = time.time() - start
-    print '%s Consume %f minutes'%(v_name, total_name/60)
+    print '%s Consume %f minutes'%(v_name, total_time/60)
     return 

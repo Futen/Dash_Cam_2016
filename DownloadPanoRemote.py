@@ -26,15 +26,17 @@ def Download(v_name_comprass):
     command = 'sshpass -p pig6983152 scp Faraday:%s/pano_lst_finish.txt %s'%(info['pano_path'], info['pano_path'])
     subprocess.call(command, shell=True)
     libRundownload.DownloadPano(v_name_comprass)
-    command = 'sshpass -p pig6983152 scp %s/pano_lst_precise.txt %s/pano_cut_lst.txt Faraday:%s'%(
+    command = 'sshpass -p pig6983152 scp %s/download_error_lst.txt %s/pano_lst_precise.txt %s/pano_cut_lst.txt Faraday:%s'%(
                 info['pano_path'],
                 info['pano_path'],
                 info['pano_path'],
-    #subprocess.call(command, shell=True)
-    print command
+                info['pano_path']
+                )
+    subprocess.call(command, shell=True)
+    #print command
     command = 'sshpass -p pig6983152 scp %s/* Faraday:%s'%(info['pano_cut_path'], info['pano_cut_path'])
-    #subprocess.call(command, shell=True)
-    print command
+    subprocess.call(command, shell=True)
+    #print command
 
 if __name__ == '__main__':
     argv = sys.argv
