@@ -19,9 +19,9 @@ def GetVideoList(TYPE):
     file_name = ''
     lst = []
     if TYPE == 'pos':
-        file_name = '/home/Futen/Dash_Cam_2016/DataList/positive_check.txt'
+        file_name = VIDEO_INFO_PATH + '/positive_check.txt'
     elif TYPE == 'neg':
-        file_name = '/home/Futen/Dash_Cam_2016/DataList/negative_check.txt'
+        file_name = VIDEO_INFO_PATH + '/negative_check.txt'
     elif TYPE == 'NegSource':
         return GetNegSourceList()
     else:
@@ -39,9 +39,9 @@ def GetVideoLatLon(TYPE):
     file_name = ''
     lst = []
     if TYPE == 'pos':
-        file_name = '/home/Futen/Dash_Cam_2016/DataList/positive_check.txt'
+        file_name = VIDEO_INFO_PATH + '/positive_check.txt'
     elif TYPE == 'neg':
-        file_name = '/home/Futen/Dash_Cam_2016/DataList/negative_check.txt'
+        file_name = VIDEO_INFO_PATH + '/negative_check.txt'
     else:
         print 'Type error in GetVideoList'
         exit()
@@ -74,10 +74,13 @@ def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
     pano_path = video_path + '/' + PANO_PATH
     pano_uncut_path = video_path + '/' + PANO_UNCUT_PATH
     pano_cut_path = video_path + '/' + PANO_CUT_PATH
+    frame_sift_path = pano_path + '/frame_sift'
+    pano_sift_path = pano_path + '/pano_sift'
     # check process state
     reconstruction = 'no'
     panolist = 'no'
     panodownload = 'no'
+    extractsift = 'no'
     if os.path.isfile(video_path + '/reconstruction.json'):
         reconstruction = 'done'
     if os.path.isfile(pano_path + '/pano_lst_finish.txt'):    
@@ -85,13 +88,20 @@ def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
         #panolist = 'no'
     if os.path.isfile(pano_path + '/pano_lst_precise.txt'):
         panodownload = 'yes'
-    state = dict({'reconstruction':reconstruction, 'panolist':panolist, 'panodownload':panodownload})
+    if os.path.isfile(pano_path + '/frame_sift_lst.txt') and os.path.isfile(pano_path + '/pano_sift_lst.txt'):
+        extractsift = 'yes'
+
+    state = dict({'reconstruction':reconstruction, 'panolist':panolist, 'panodownload':panodownload,
+                  'extractsift':extractsift
+                 })
     
     output = dict({'video_path':video_path,
                    'frame_path':frame_path, 
                    'pano_path':pano_path, 
                    'pano_uncut_path':pano_uncut_path, 
                    'pano_cut_path':pano_cut_path,
+                   'frame_sift_path':frame_sift_path,
+                   'pano_sift_path':pano_sift_path,
                    'state':state
                    })
     '''
@@ -103,7 +113,7 @@ def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
     return output
 def GetNegSourceList(LATLON = False, SUB_VIDEO = False):
     v_lst = []
-    f = open('/home/Futen/Dash_Cam_2016/DataList/negative_arrange.txt','r')
+    f = open(VIDEO_INFO_PATH + '/negative_arrange.txt','r')
     if LATLON == False and SUB_VIDEO == False:
         for line in f:
             line = line[0:-1].split('\t')
@@ -141,6 +151,7 @@ def GetNegSourcePath(video_name):
     reconstruction = 'no'
     panolist = 'no'
     panodownload = 'no'
+    extractsift = 'no'
     if os.path.isfile(pano_path + '/reconstruction.json'):
         reconstruction = 'done'
     if os.path.isfile(pano_path + '/pano_lst_finish.txt'):    
@@ -148,7 +159,11 @@ def GetNegSourcePath(video_name):
         #panolist = 'no'
     if os.path.isfile(pano_path + '/pano_lst_precise.txt'):
         panodownload = 'yes'
-    state = dict({'reconstruction':reconstruction, 'panolist':panolist, 'panodownload':panodownload})
+    if os.path.isfile(pano_path + '/frame_sift_lst.txt') and os.path.isfile(pano_path + '/pano_sift_lst.txt'):
+        extractsift = 'yes'
+    state = dict({'reconstruction':reconstruction, 'panolist':panolist, 'panodownload':panodownload,
+                  'extractsift':extractsift
+                })
     output = dict({'pano_path':pano_path,
                    'pano_uncut_path':pano_uncut_path,
                    'pano_cut_path':pano_cut_path,
