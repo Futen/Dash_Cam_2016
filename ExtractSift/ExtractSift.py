@@ -38,4 +38,5 @@ if __name__ == '__main__':
             subprocess.call('rm %s/frame_lst.txt'%pano_dir, shell=True)
             WriteList(DIR = info['pano_path'], LIST = frame_sift_lst, NAME = 'frame_sift_lst.txt')
             writeList(DIR = info['pano_path'], LIST = pano_sift_lst, NAME = 'pano_sift_lst.txt')
+            break
 
