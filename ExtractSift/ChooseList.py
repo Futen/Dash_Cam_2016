@@ -20,7 +20,7 @@ def SampleNegative(num):
     finish_lst = []
     for one in lst:
         info = SP.GetPath(one[0], 'NegSource')
-        v_name = one[-1]
+        v_name = one[-1].split('.')[0]
         if info['state']['panodownload'] == 'yes':
             finish_lst.append(v_name)
             dic[v_name] = one[0]
@@ -31,7 +31,18 @@ if __name__ == '__main__':
     argv = sys.argv
     if len(argv) != 2:
         print 'Argument Error'
+        exit()
+    f_name = argv[1]
     pos_lst = sorted(SamplePositive(sample))
-    neg_lst,dic = SampleNegative(sample)
+    f = open(f_name+'_pos.txt','w')
+    for one in pos_lst:
+        f.write(one + '\n')
+    f.close()
+    (neg_lst,dic) = SampleNegative(sample)
     neg_lst = sorted(neg_lst)
+    f = open(f_name+'_neg.txt','w')
+    for one in neg_lst:
+        s = '%s\t%s\n'%(one, dic[one])
+        f.write(s)
+    f.close()
     print neg_lst
