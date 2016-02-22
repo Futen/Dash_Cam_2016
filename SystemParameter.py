@@ -3,7 +3,7 @@ import subprocess
 # Global Parameter
 ROOT_PATH = '/home/Futen/Dash_Cam_2016' # root directory
 VIDEO_PATH = '/home/Futen/Dash_Cam_2016/Videos' # Location of video
-VIDEO_INFO_PATH = '/home/Futen/Dash_Cam_2016/video_info'
+VIDEO_INFO_PATH = '/home/Futen/Dash_Cam_2016/DataList'
 OPENSFM_PATH = '/home/Futen/OpenSfM/bin'
 # parameter for pano
 RADIUS = 0.3 # download pano with RADIUS km in circle
