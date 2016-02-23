@@ -1,4 +1,6 @@
 *.txt
+*.npz
+*.npy
 *.pyc
 *.jpg
 wget*

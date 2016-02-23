@@ -33,7 +33,7 @@ if __name__ == '__main__':
         frame_sift_lst = np.random.choice(frame_sift_lst, 10)
         pano_sift_lst = GetList(info['pano_path'] + '/pano_sift_lst.txt')
         pano_sift_lst = [x for x in os.listdir(info['pano_sift_path']) if x.endswith('.sift')]
-        pano_sift_lst = np.random.choice(pano_sift_lst, 30)
+        pano_sift_lst = np.random.choice(pano_sift_lst, 20)
         for frame_sift in frame_sift_lst:
             (loc, des) = ReadSift.ReadSift(info['frame_sift_path'] + '/' + frame_sift)
             if des.size == 0: 
@@ -52,7 +52,7 @@ if __name__ == '__main__':
         frame_sift_lst = np.random.choice(frame_sift_lst, 10)
         pano_sift_lst = GetList(info['pano_path'] + '/pano_sift_lst.txt')
         pano_sift_lst = [x for x in os.listdir(info['pano_sift_path']) if x.endswith('.sift')]
-        pano_sift_lst = np.random.choice(pano_sift_lst, 30)
+        pano_sift_lst = np.random.choice(pano_sift_lst, 20)
         for frame_sift in frame_sift_lst:
             (loc, des) = ReadSift.ReadSift(info['frame_sift_path'] + '/' + frame_sift)
             if des.size == 0: 
