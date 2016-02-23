@@ -355,6 +355,8 @@ class PanoramaMetadata:
                         tmp = tmp[0].content
                         tmp = zlib.decompress(base64.urlsafe_b64decode(tmp + self.MakePadding(tmp)))
                         self.DecodeDepthMap(tmp)
+                panodoc.freeDoc()
+                panoDocCtx.xpathFreeContext()
 
 
         def MakePadding(self, s):
