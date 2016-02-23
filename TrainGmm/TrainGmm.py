@@ -7,6 +7,7 @@ from yael import ynumpy
 import ReadSift
 import os
 import subprocess
+import SendEmail
 
 def GetList(file_name):
     if not os.path.isfile(file_name) :
@@ -80,3 +81,4 @@ if __name__ == '__main__':
     A = np.isfinite(sample)
     gmm = ynumpy.gmm_learn(sample, k)
     np.savez('../gmm_2step',a=gmm[0],b=gmm[1],c=gmm[2],mean=mean,pca_transform=pca_transform)
+    SendEmail.SendEmail(To = 'tdk356ubuntu@gmail.com')
