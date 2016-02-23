@@ -94,12 +94,12 @@ def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
                    'pano_cut_path':pano_cut_path,
                    'state':state
                    })
-    '''
+    
     for index, key in enumerate(output):
         if key != 'state':
             if not(os.path.isdir(output[key])):
                 subprocess.call('mkdir -p %s'%output[key], shell=True)
-    '''
+    
     return output
 def GetNegSourceList(LATLON = False, SUB_VIDEO = False):
     v_lst = []
@@ -155,10 +155,8 @@ def GetNegSourcePath(video_name):
                    'state':state
                    })
 
-    '''
     for index,key in enumerate(output):
         if key != 'state':
             if not(os.path.isdir(output[key])):
                 subprocess.call('mkdir -p %s'%output[key], shell=True)
-    '''
     return output

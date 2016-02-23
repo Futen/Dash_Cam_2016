@@ -2,7 +2,7 @@
 
 import sys
 sys.path.append('/home/Futen/Dash_Cam_2016')
-import SystemParameter as SP
+import SystemParameter_For_Download as SP
 import GetCircleBound
 import PanoProcess
 import subprocess
@@ -10,7 +10,7 @@ from multiprocessing import Pool
 import numpy as np
 import time
 import GetPanoByID
-
+import SendEmail
 number_to_do = 247
 number = 0
 TYPE = 'pos'
@@ -30,15 +30,16 @@ def DownloadList(center):   # average 42 second for one video
             pano_lst.append((pano_name, latlon[0], latlon[1]))
     return (pano_lst, err_lst)
 def Download(video_info): # (vname, lat, lon))
-    global number
-    if number >= number_to_do:
-        return
+    #global number
+    #if number >= number_to_do:
+    #    return
     print '# %d'%number,video_info
     vname = video_info[0]
     latlon = (float(video_info[1]), float(video_info[2]))
     path =  SP.GetPath(vname, TYPE)# get all path
 
-    if path['state']['panolist'] == 'no':
+    #if path['state']['panolist'] == 'no':
+    if True:
         #print vname,latlon
         result = DownloadList(latlon)
         pano_lst = result[0]
@@ -58,13 +59,14 @@ def Download(video_info): # (vname, lat, lon))
         f.close()
         command = 'mv %s/pano_lst.txt %s/pano_lst_finish.txt'%(path['pano_path'], path['pano_path'])
         subprocess.call(command, shell=True)
-        number += 1
+        #number += 1
     else:
         print '%s finish'%vname
 
 if __name__ == '__main__':
-    #pool = Pool(processes = 12)
-    #lst = SP.GetVideoLatLon(TYPE)
-    g = ('000044','24.958109','121.224663')
-    Download(g)
-    #pool.map(Download, lst)
+    pool = Pool(processes = 4)
+    lst = SP.GetVideoLatLon(TYPE)
+    #g = ('000044','24.958109','121.224663')
+    #Download(g)
+    pool.map(Download, lst)
+    SendEmail.SendEmail(To = 'tdk356ubuntu@gmail.com')
