@@ -35,7 +35,7 @@ def DownloadPano(v_name_comprass):
         ID = line[0]
         location = PanoProcess.GoogleSV.getLocationbyID(ID)
         #print location
-        if ID in finish_lst:
+        if ID in finish_lst or os.path.isfile(info['pano_cut_path'] + '/pano_' + ID + '_0.jpg'):
             continue
         check = GetPanoByID.GetPanoByID(ID, info['pano_cut_path'])
         if check == True:
