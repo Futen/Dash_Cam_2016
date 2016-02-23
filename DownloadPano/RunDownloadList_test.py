@@ -9,6 +9,7 @@ import subprocess
 from multiprocessing import Pool
 import numpy as np
 import time
+import os
 import GetPanoByID
 import SendEmail
 number_to_do = 247
@@ -64,9 +65,23 @@ def Download(video_info): # (vname, lat, lon))
         print '%s finish'%vname
 
 if __name__ == '__main__':
-    pool = Pool(processes = 4)
+    pool = Pool(processes = 3)
+    do_lst = []
     lst = SP.GetVideoLatLon(TYPE)
+    for one in lst:
+        info = SP.GetPath(one[0], TYPE)
+        c = 1
+        try:
+            f = open(info['pano_path'] + '/pano_lst_finish.txt','r')
+            for line in f:
+                c+=1
+            f.close()
+        except:
+            do_lst.append(one)
+        if c <= 300:
+            do_lst.append(one)
     #g = ('000044','24.958109','121.224663')
     #Download(g)
-    pool.map(Download, lst)
+    print len(do_lst)
+    pool.map(Download, do_lst)
     SendEmail.SendEmail(To = 'tdk356ubuntu@gmail.com')
