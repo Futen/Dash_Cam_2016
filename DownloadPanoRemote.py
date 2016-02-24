@@ -49,6 +49,6 @@ if __name__ == '__main__':
     #print lst
     #test = ('Z5qLtC7sTmU', 'NegSource')
     #Download(test)
-    pool = Pool(processes = 2)
+    pool = Pool(processes = 4)
     pool.map(Download, lst)
     SendEmail.SendEmail(To = 'tdk356ubuntu@gmail.com')
