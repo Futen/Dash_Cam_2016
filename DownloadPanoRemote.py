@@ -8,6 +8,7 @@ import subprocess
 import SystemParameter_For_Download as SP
 import libRundownload
 from multiprocessing import Pool
+import SendEmail
 ##
 TYPE = 'pos'
 def GetList(f_name):
@@ -24,7 +25,7 @@ def Download(v_name_comprass):
     subprocess.call('mkdir -p %s'%info['pano_cut_path'], shell=True)
     subprocess.call('mkdir -p %s'%info['pano_uncut_path'], shell=True)
     command = 'sshpass -p pig6983152 scp Faraday:%s/pano_lst_finish.txt %s'%(info['pano_path'], info['pano_path'])
-    subprocess.call(command, shell=True)
+    #subprocess.call(command, shell=True)
     libRundownload.DownloadPano(v_name_comprass)
     command = 'sshpass -p pig6983152 scp %s/download_error_lst.txt %s/pano_lst_precise.txt %s/pano_cut_lst.txt Faraday:%s'%(
                 info['pano_path'],
@@ -45,7 +46,9 @@ if __name__ == '__main__':
         exit()
     lst = GetList(argv[1])
     lst = libRundownload.ArgumentComprass(lst, TYPE)
+    #print lst
     #test = ('Z5qLtC7sTmU', 'NegSource')
     #Download(test)
-    pool = Pool(processes = 1)
+    pool = Pool(processes = 2)
     pool.map(Download, lst)
+    SendEmail.SendEmail(To = 'tdk356ubuntu@gmail.com')
