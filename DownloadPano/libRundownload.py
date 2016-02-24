@@ -39,8 +39,8 @@ def DownloadPano(v_name_comprass):
             if os.path.isfile(info['pano_cut_path'] + '/pano_' + ID + '_0.jpg'):
                 if not ID in finish_lst:
                     finish_lst.append(ID)
-                s = 'pano_' + ID + '.jpg' + '\t' + location[0] + '\t' + location[1] + '\n'
-                pano_out_file.write(s)
+                    s = 'pano_' + ID + '.jpg' + '\t' + location[0] + '\t' + location[1] + '\n'
+                    pano_out_file.write(s)
             continue
         check = GetPanoByID.GetPanoByID(ID, info['pano_cut_path'])
         if check == True:
