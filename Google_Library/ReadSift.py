@@ -28,7 +28,7 @@ def ReadSift(fulPath):
 
 	raw3 = np.fromfile(f, np.int32)
 
-
+        f.close()
 	#print npoint, raw1, raw2,raw3.shape,
 
 	return (raw1,raw2)
@@ -54,7 +54,7 @@ def CountSift(fulPath):
 
 
 	#print npoint, raw1, raw2,raw3.shape,
-
+        f.close()
 	return npoint
 
 
