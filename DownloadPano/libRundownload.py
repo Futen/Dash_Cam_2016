@@ -37,7 +37,8 @@ def DownloadPano(v_name_comprass):
         #print location
         if ID in finish_lst or os.path.isfile(info['pano_cut_path'] + '/pano_' + ID + '_0.jpg'):
             if os.path.isfile(info['pano_cut_path'] + '/pano_' + ID + '_0.jpg'):
-                finish_lst.append(ID)
+                if not ID in finish_lst:
+                    finish_lst.append(ID)
                 s = 'pano_' + ID + '.jpg' + '\t' + location[0] + '\t' + location[1] + '\n'
                 pano_out_file.write(s)
             continue
