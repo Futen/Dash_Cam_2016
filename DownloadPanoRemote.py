@@ -10,7 +10,7 @@ import libRundownload
 from multiprocessing import Pool
 import SendEmail
 ##
-TYPE = 'pos'
+TYPE = 'NegSource'
 def GetList(f_name):
     f = open(f_name, 'r')
     lst = []
