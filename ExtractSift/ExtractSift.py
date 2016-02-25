@@ -5,7 +5,7 @@ import subprocess
 import os
 import SendEmail
 
-TYPE = 'neg'
+TYPE = 'pos'
 
 def WriteList(DIR,LIST,NAME='frame_lst.txt'):
     f = open(DIR + '/'  + NAME, 'w')
