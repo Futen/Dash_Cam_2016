@@ -19,5 +19,5 @@ if __name__ == '__main__':
     info = SP.GetPath(test_id, 'NegSource')
     print info
     '''
-    TYPE = 'pos'
+    TYPE = 'NegSource'
     ExportDownloadList(TYPE, 'list.txt')
