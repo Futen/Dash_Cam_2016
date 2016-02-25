@@ -19,7 +19,7 @@ def SamplePositive(num):
             dic[v_name] = source
     f.close()
     do_lst = np.random.choice(finish_lst, num, replace = False)
-    return (do_lst,dic)
+    return (finish_lst,dic)
 def SampleNegative(num):
     lst = SP.GetNegSourceList(SUB_VIDEO = True)
     dic = {}
