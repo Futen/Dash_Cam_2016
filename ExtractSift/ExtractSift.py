@@ -17,7 +17,8 @@ if __name__ == '__main__':
     for one in lst:
         v_name = one[0]
         info = EL.GetVideoInfo(v_name, TYPE)
-        if info['state']['extractsift'] == 'no':
+        #if info['state']['extractsift'] == 'no':
+        if True:
             print v_name
             frame_dir = info['frame_path']
             pano_dir = info['pano_cut_path']
@@ -25,8 +26,8 @@ if __name__ == '__main__':
             pano_lst = [x for x in sorted(os.listdir(pano_dir)) if x.endswith('.jpg')]
             WriteList(DIR=frame_dir, LIST=frame_lst)
             WriteList(DIR=pano_dir, LIST=pano_lst)
-            #subprocess.call('mkdir -p %s'%info['frame_sift_path'], shell=True)
-            #subprocess.call('mkdir -p %s'%info['pano_sift_path'], shell=True)
+            subprocess.call('mkdir -p %s'%info['frame_sift_path'], shell=True)
+            subprocess.call('mkdir -p %s'%info['pano_sift_path'], shell=True)
             command = 'VisualSFM siftgpu %s/frame_lst.txt'%frame_dir
             subprocess.call(command, shell=True)
             command = 'VisualSFM siftgpu %s/frame_lst.txt'%pano_dir
