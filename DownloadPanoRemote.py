@@ -37,6 +37,8 @@ def Download(v_name_comprass):
     #print command
     command = 'sshpass -p pig6983152 scp %s/* Faraday:%s'%(info['pano_cut_path'], info['pano_cut_path'])
     subprocess.call(command, shell=True)
+    command = 'rm -r -- %s/'%(info['pano_cut_path'])
+    subprocess.call(command, shell=True)
     #print command
 
 if __name__ == '__main__':
