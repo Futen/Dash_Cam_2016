@@ -14,11 +14,13 @@ def WriteList(DIR,LIST,NAME='frame_lst.txt'):
     f.close()
 if __name__ == '__main__':
     lst = EL.GetList(TYPE)
+    do_lst = []
     for one in lst:
         v_name = one[0]
         info = EL.GetVideoInfo(v_name, TYPE)
-        #if info['state']['extractsift'] == 'no':
-        if True:
+        if info['state']['extractsift'] == 'no':
+        #if True:
+            do_lst.append(one)
             print v_name
             frame_dir = info['frame_path']
             pano_dir = info['pano_cut_path']
@@ -41,4 +43,5 @@ if __name__ == '__main__':
             WriteList(DIR = info['pano_path'], LIST = frame_sift_lst, NAME = 'frame_sift_lst.txt')
             WriteList(DIR = info['pano_path'], LIST = pano_sift_lst, NAME = 'pano_sift_lst.txt')
             #break
+    #print len(do_lst)
     SendEmail.SendEmail(To = 'tdk356ubuntu@gmail.com')
