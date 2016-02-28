@@ -24,14 +24,14 @@ def Fisher(video_comprass): # [(v_name,source), seg_type]
     
     frame_desc = []
     for one in frame_sift_lst:
-        f = info['frame_sift_path'] + '/' + 'one'
+        f = info['frame_sift_path'] + '/' + one
         desc = ReadSift.ReadSift(f)[1]
         if desc.size == 0:
             desc = np.zeros((0, 128), dtype = 'uint8')
         frame_desc.append(desc)
     pano_desc = []
     for one in pano_sift_lst:
-        f = info['pano_sift_path'] + '/' + 'one'
+        f = info['pano_sift_path'] + '/' + one
         desc = ReadSift.ReadSift(f)[1]
         if desc.size == 0:
             desc = np.zeros((0,128), dtype = 'uint8')
@@ -67,12 +67,29 @@ def Fisher(video_comprass): # [(v_name,source), seg_type]
     np.save('%s/fisher_results'%info['pano_path'],results)
 
 if __name__ == '__main__':
-    pool = Pool(processes = 12)
+    pool = Pool(processes = 4)
     lst = EL.GetList(TYPE)
+    #Fisher([('000945','gg'), 'pos'])
     lst = libRundownload.ArgumentComprass(lst, TYPE)
+    print 'total %d videos'%len(lst)
+    gg_lst = []
+    for one in lst:
+        v_name = one[0][0]
+        info = EL.GetVideoInfo(v_name, 'pos')
+    
+        if info['state']['fisher'] == 'no' and v_name != '000219':
+            print v_name
+            gg_lst.append(one)
+        
+        '''
+        if len(os.listdir(info['pano_sift_path'])) < 15:
+            print v_name
+            gg_lst.append(v_name)
+        '''
+    print len(gg_lst)
+    #Fisher([('000219','ff'), 'pos'])
     try:
-        pool.map(Fisher, lst)
+        pool.map(Fisher, gg_lst)
         SendEmail.SendEmail()
     except:
         SendEmail.SendEmail(Text = 'GGGGGGGG')
-

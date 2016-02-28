@@ -81,6 +81,7 @@ def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
     panolist = 'no'
     panodownload = 'no'
     extractsift = 'no'
+    fisher = 'no'
     if os.path.isfile(video_path + '/reconstruction.json'):
         reconstruction = 'done'
     if os.path.isfile(pano_path + '/pano_lst_finish.txt'):    
@@ -90,9 +91,11 @@ def GetPath(video_name, TYPE): #GetPath('ZCTXXXX')
         panodownload = 'yes'
     if os.path.isfile(pano_path + '/frame_sift_lst.txt') and os.path.isfile(pano_path + '/pano_sift_lst.txt'):
         extractsift = 'yes'
+    if os.path.isfile(pano_path + '/fisher_results.npy'):
+        fisher = 'yes' 
 
     state = dict({'reconstruction':reconstruction, 'panolist':panolist, 'panodownload':panodownload,
-                  'extractsift':extractsift
+        'extractsift':extractsift, 'fisher':fisher
                  })
     
     output = dict({'video_path':video_path,
