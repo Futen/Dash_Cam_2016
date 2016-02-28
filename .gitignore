@@ -3,6 +3,7 @@
 *.npy
 *.pyc
 *.jpg
+*.sift
 wget*
 config.yaml
 DataList/

@@ -31,8 +31,10 @@ def Fisher(video_comprass): # [(v_name,source), seg_type]
         frame_desc.append(desc)
     pano_desc = []
     for one in pano_sift_lst:
+        #print one
         f = info['pano_sift_path'] + '/' + one
         desc = ReadSift.ReadSift(f)[1]
+        #print one
         if desc.size == 0:
             desc = np.zeros((0,128), dtype = 'uint8')
         pano_desc.append(desc)
@@ -87,9 +89,9 @@ if __name__ == '__main__':
             gg_lst.append(v_name)
         '''
     print len(gg_lst)
-    #Fisher([('000219','ff'), 'pos'])
-    try:
-        pool.map(Fisher, gg_lst)
-        SendEmail.SendEmail()
-    except:
-        SendEmail.SendEmail(Text = 'GGGGGGGG')
+    #Fisher([('000905','ff'), 'pos'])
+    #try:
+    pool.map(Fisher, gg_lst)
+    SendEmail.SendEmail()
+    #except:
+        #SendEmail.SendEmail(Text = 'GGGGGGGG')
