@@ -8,8 +8,11 @@ import lib_SIFTmatch
 import cv2
 import numpy as np
 import ExpList as EL
+import SendEmail
+from multiprocessing import Pool
 
-def MacthFunM(video_comprass):
+TYPE = 'pos'
+def MatchFunM(video_comprass):
     v_name = video_comprass[0][0]
     source = video_comprass[0][1]
     seg_type = video_comprass[1]
@@ -17,7 +20,7 @@ def MacthFunM(video_comprass):
     print info
     results = np.load('%s/fisher_results.npy'%info['pano_path'])
     frame_sift_lst = [x for x in sorted(os.listdir('%s/'%info['frame_sift_path'])) if x.endswith('.sift')]
-    pano_sift_lst = [x for x in sorted(os.listdir('%s/')%info['pano_sift_path']) if x.endswith('.sift')]
+    pano_sift_lst = [x for x in sorted(os.listdir('%s/'%info['pano_sift_path'])) if x.endswith('.sift')]
     MM = []
     for index, name in enumerate(frame_sift_lst):
         Mi = []
@@ -39,9 +42,19 @@ def MacthFunM(video_comprass):
         MM.append(Mi)
     np.save('%s/results_fundM'%info['pano_path'],MM)
 
-
-
-
+if __name__ == '__main__':
+    lst = EL.GetList(TYPE)
+    lst = EL.ArgumentComprass(lst, TYPE)
+    do_lst = []
+    for one in lst:
+        v_name = one[0][0]
+        info = EL.GetVideoInfo(v_name, TYPE)
+        if info['state']['fisher'] == 'yes':
+            do_lst.append(one)
+    print len(do_lst)
+    MatchFunM(do_lst[0])
+    #pool = Pool(processes = 10)
+    #pool.map(MatchFunM, do_lst)
 
 
 

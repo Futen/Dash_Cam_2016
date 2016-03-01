@@ -1,3 +1,6 @@
+import sys
+sys.path.append('/home/Futen/Dash_Cam_2016/DownloadPano/')
+import libRundownload
 import os
 import SystemParameter as SP
 
@@ -18,7 +21,9 @@ def GetList(TYPE):
     return lst
 def GetVideoInfo(v_name, TYPE):
     return SP.GetPath(v_name, TYPE)
-
+def ArgumentComprass(v_lst, seg_type):
+    return libRundownload.ArgumentComprass(v_lst, seg_type)
 if __name__ == '__main__':
     lst = GetList('neg')
     print GetVideoInfo(lst[-1][0], 'neg')
+    print ArgumentComprass(lst,'pos')
