@@ -30,15 +30,19 @@ def MatchFunM(video_comprass):
             pano_short_name = pano_name.split('.')[0]
             kp_pairs = lib_SIFTmatch.flann_match('%s/%s'%(info['frame_sift_path'],frame_short_name),
                                                  '%s/%s'%(info['pano_sift_path'],pano_short_name))
-            (mkp1, mkp2) = zip(*kp_pairs)
-            mkp1_pts = [ (x[0],x[1]) for x in mkp1 ]
-            mkp2_pts = [ (x[0],x[1]) for x in mkp2 ]
-            mkp1_pts = np.float32(mkp1_pts)
-            mkp2_pts = np.float32(mkp2_pts)
-            F, mask = cv2.findFundamentalMat(mkp1_pts,mkp2_pts,cv2.FM_RANSAC,3)
-            q_pts = mkp1_pts[mask.ravel()==1]
-            t_pts = mkp2_pts[mask.ravel()==1]
-            Mi.append(len(q_pts))
+            try:
+                (mkp1, mkp2) = zip(*kp_pairs)
+                mkp1_pts = [ (x[0],x[1]) for x in mkp1 ]
+                mkp2_pts = [ (x[0],x[1]) for x in mkp2 ]
+                mkp1_pts = np.float32(mkp1_pts)
+                mkp2_pts = np.float32(mkp2_pts)
+                F, mask = cv2.findFundamentalMat(mkp1_pts,mkp2_pts,cv2.FM_RANSAC,20)
+                q_pts = mkp1_pts[mask.ravel()==1]
+                t_pts = mkp2_pts[mask.ravel()==1]
+                Mi.append(len(q_pts))
+            except:
+                Mi.append(0)
+                continue
         MM.append(Mi)
     np.save('%s/results_fundM'%info['pano_path'],MM)
 
@@ -49,12 +53,12 @@ if __name__ == '__main__':
     for one in lst:
         v_name = one[0][0]
         info = EL.GetVideoInfo(v_name, TYPE)
-        if info['state']['fisher'] == 'yes':
+        if info['state']['fisher'] == 'yes' and info['state']['match'] == 'no':
             do_lst.append(one)
     print len(do_lst)
-    #MatchFunM(do_lst[0])
-    pool = Pool(processes = 10)
-    pool.map(MatchFunM, do_lst)
+    #MatchFunM([('000196','gg'),'pos'])
+    pool = Pool(processes = 11)
+    pool.map(MatchFunM, lst)
     SendEmail.SendEmail()
 
 
