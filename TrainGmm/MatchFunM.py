@@ -35,7 +35,7 @@ def MatchFunM(video_comprass):
             mkp2_pts = [ (x[0],x[1]) for x in mkp2 ]
             mkp1_pts = np.float32(mkp1_pts)
             mkp2_pts = np.float32(mkp2_pts)
-            F, mask = cv2.findFundamentalMat(mkp1_pts,mkp2_pts,cv2.FM_RANSAC)
+            F, mask = cv2.findFundamentalMat(mkp1_pts,mkp2_pts,cv2.FM_RANSAC,3)
             q_pts = mkp1_pts[mask.ravel()==1]
             t_pts = mkp2_pts[mask.ravel()==1]
             Mi.append(len(q_pts))
@@ -52,9 +52,10 @@ if __name__ == '__main__':
         if info['state']['fisher'] == 'yes':
             do_lst.append(one)
     print len(do_lst)
-    MatchFunM(do_lst[0])
-    #pool = Pool(processes = 10)
-    #pool.map(MatchFunM, do_lst)
+    #MatchFunM(do_lst[0])
+    pool = Pool(processes = 10)
+    pool.map(MatchFunM, do_lst)
+    SendEmail.SendEmail()
 
 
 
