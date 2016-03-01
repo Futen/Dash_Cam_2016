@@ -53,12 +53,12 @@ if __name__ == '__main__':
     for one in lst:
         v_name = one[0][0]
         info = EL.GetVideoInfo(v_name, TYPE)
-        if info['state']['fisher'] == 'yes' and info['state']['match'] == 'no':
+        if info['state']['fisher'] == 'yes':
             do_lst.append(one)
     print len(do_lst)
     #MatchFunM([('000196','gg'),'pos'])
     pool = Pool(processes = 11)
-    pool.map(MatchFunM, lst)
+    pool.map(MatchFunM, do_lst)
     SendEmail.SendEmail()
 
 
