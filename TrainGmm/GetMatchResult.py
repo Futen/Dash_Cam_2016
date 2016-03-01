@@ -67,7 +67,7 @@ if __name__ == '__main__':
     #test = [('000501','GGGG'),'pos']
     #GetMatchResult(test)
     #GetBestResult(test)
-
+    #
     lst = EL.GetList(TYPE)
     do_lst = []
     for one in lst:
