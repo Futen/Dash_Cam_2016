@@ -41,6 +41,7 @@ def GetBestResult(video_comprass):
     info = EL.GetVideoInfo(v_name, seg_type)
     f = open('%s/match_score.txt'%info['pano_path'],'r')
     dic = {}
+    print v_name
     for line in f:
         line = line[0:-1].split('\t')
         frame_name = line[0]
@@ -61,7 +62,7 @@ def GetBestResult(video_comprass):
     #print '%s %d %s %s'%(max_pano,max_time, location[0], location[1])
     data = dict({'pano':max_pano, 'time':max_time, 'lat':location[0], 'lon':location[1]})
     output_dic[v_name] = data
-    print data
+    #print data
 
 if __name__ == '__main__':
     test = [('000501','GGGG'),'pos']
@@ -72,6 +73,7 @@ if __name__ == '__main__':
     lst = EL.ArgumentComprass(lst, TYPE)
     pool = Pool(processes = 4)
     pool.map(GetMatchResult, lst)
+    pool.map(GetBestResult, lst)
     if TYPE == 'pos':
         f_name = 'pos_final.txt'
     elif TYPE == 'neg':
@@ -82,4 +84,5 @@ if __name__ == '__main__':
         s = '%s\t%s\t%d\t%s\t%s\n'%(v_name, output_dic[v_name]['pano'], output_dic[v_name]['time'], output_dic[v_name]['lat'], output_dic[v_name]['lon'])
         f.write(s)
     f.close()
+    SendEmail.SendEmail(Text='YAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYA')
     '''
