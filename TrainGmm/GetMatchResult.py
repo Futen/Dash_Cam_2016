@@ -9,7 +9,6 @@ import GoogleSV
 from multiprocessing import Pool
 TYPE = 'pos'
 
-output_dic = {}
 def GetMatchResult(video_comprass):
     v_name = video_comprass[0][0]
     source = video_comprass[0][1]
@@ -60,20 +59,29 @@ def GetBestResult(video_comprass):
     pano_id = max_pano[5:27]
     location = GoogleSV.getLocationbyID(pano_id)
     #print '%s %d %s %s'%(max_pano,max_time, location[0], location[1])
-    data = dict({'pano':max_pano, 'time':max_time, 'lat':location[0], 'lon':location[1]})
-    output_dic[v_name] = data
+    data = dict({'video':v_name, 'pano':max_pano, 'time':max_time, 'lat':location[0], 'lon':location[1]})
     #print data
+    return data
 
 if __name__ == '__main__':
-    test = [('000501','GGGG'),'pos']
-    GetMatchResult(test)
-    GetBestResult(test)
-    '''
+    #test = [('000501','GGGG'),'pos']
+    #GetMatchResult(test)
+    #GetBestResult(test)
+
     lst = EL.GetList(TYPE)
     lst = EL.ArgumentComprass(lst, TYPE)
     pool = Pool(processes = 4)
+
     pool.map(GetMatchResult, lst)
-    pool.map(GetBestResult, lst)
+    results = pool.map(GetBestResult, lst)
+    output_dic = {}
+    for one in results:
+        output_dic[one['video']] = {}
+        output_dic[one['video']]['pano'] = one['pano']
+        output_dic[one['video']]['time'] = one['time']
+        output_dic[one['video']]['lat'] = one['lat']
+        output_dic[one['video']]['lon'] = one['lon']
+
     if TYPE == 'pos':
         f_name = 'pos_final.txt'
     elif TYPE == 'neg':
@@ -85,4 +93,3 @@ if __name__ == '__main__':
         f.write(s)
     f.close()
     SendEmail.SendEmail(Text='YAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYAYA')
-    '''
