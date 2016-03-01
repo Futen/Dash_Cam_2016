@@ -69,7 +69,12 @@ if __name__ == '__main__':
     #GetBestResult(test)
 
     lst = EL.GetList(TYPE)
-    lst = EL.ArgumentComprass(lst, TYPE)
+    do_lst = []
+    for one in lst:
+        info = EL.GetVideoInfo(one[0], TYPE)
+        if info['state']['match'] == 'yes'
+            do_lst.append(one)
+    lst = EL.ArgumentComprass(do_lst, TYPE)
     pool = Pool(processes = 4)
 
     pool.map(GetMatchResult, lst)
