@@ -19,7 +19,7 @@ def GetMatchResult(video_comprass):
     f = open('%s/match_score.txt'%info['pano_path'],'w')
     frame_sift_lst = [x for x in sorted(os.listdir(info['frame_sift_path'])) if x.endswith('.sift')]
     pano_sift_lst = [x for x in sorted(os.listdir(info['pano_sift_path'])) if x.endswith('.sift')]
-
+    print v_name
     for index, name in enumerate(frame_sift_lst):
         match_score = score[index]
         scoreSort = match_score.argsort()
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     do_lst = []
     for one in lst:
         info = EL.GetVideoInfo(one[0], TYPE)
-        if info['state']['match'] == 'yes'
+        if info['state']['match'] == 'yes':
             do_lst.append(one)
     lst = EL.ArgumentComprass(do_lst, TYPE)
     pool = Pool(processes = 4)
